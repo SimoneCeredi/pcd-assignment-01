@@ -1,5 +1,5 @@
-import model.Counter;
-import model.CounterImpl;
+package model;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
