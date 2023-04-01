@@ -27,7 +27,12 @@ public class Producer implements Runnable {
                         this.getAllFiles(file);
                     } else {
                         if (file.getName().endsWith(".java")) {
-                            queue.add(file);
+                            try {
+                                queue.put(file);
+                                System.out.println("Produced: " + file.getName());
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
