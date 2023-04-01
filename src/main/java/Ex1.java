@@ -3,6 +3,8 @@ import utils.Files;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Ex1 {
 
@@ -19,5 +21,7 @@ public class Ex1 {
         long elapsedTime = System.currentTimeMillis() - startTime;
 
         System.out.println("Elapsed time " + elapsedTime + "ms");
+        Map<Integer, Long> counts = filesLength.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+        counts.forEach((n, tot) -> System.out.println(n + "->" + tot));
     }
 }
