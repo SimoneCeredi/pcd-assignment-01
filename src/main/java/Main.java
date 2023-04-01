@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Ex1 {
+public class Main {
 
     public static final String D = "./files";
 
