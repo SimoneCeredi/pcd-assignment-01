@@ -34,7 +34,7 @@ public class DataManagerTaskImpl implements DataManagerTask {
                 entry.getValue().inc();
             }
         }
-//        System.out.println("TopN:");
+//        System.out.println("\n\n\n\nTopN:");
 //        this.topN.forEach(f -> System.out.println("Name: " + f.getFile().getName() + " size: " + f.getLineCount()));
 //
 //        System.out.println("\n\nLineCount:");

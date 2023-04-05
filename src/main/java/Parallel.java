@@ -18,6 +18,8 @@ public class Parallel {
         DataManagersPool dataManagersPool = new DataManagersPoolImpl(3, "data-man", ni, maxl, n);
         long startTime = System.currentTimeMillis();
         producers.submitTask(new ExploreDirTaskImpl(new File(d), producers, consumers, dataManagersPool));
+//        Thread.sleep(100);
+//        System.exit(0);
         producers.onFinish(() -> {
             long elapsedTime = System.currentTimeMillis() - startTime;
             System.out.println("Producers finished in " + elapsedTime + "ms");
