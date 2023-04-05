@@ -1,3 +1,5 @@
+import model.pool.DataManagersPool;
+import model.pool.DataManagersPoolImpl;
 import model.pool.ThreadPool;
 import model.pool.ThreadPoolImpl;
 import model.task.exploredir.ExploreDirTaskImpl;
@@ -13,8 +15,9 @@ public class Parallel {
         int n = Integer.parseInt(args[3]); // N sorgenti con il numero maggiore di linee di codice
         ThreadPool producers = new ThreadPoolImpl(3, "producer");
         ThreadPool consumers = new ThreadPoolImpl(13, "consumer");
+        DataManagersPool dataManagersPool = new DataManagersPoolImpl(3, "data-man", ni, maxl, n);
         long startTime = System.currentTimeMillis();
-        producers.submitTask(new ExploreDirTaskImpl(new File(d), producers, consumers));
+        producers.submitTask(new ExploreDirTaskImpl(new File(d), producers, consumers, dataManagersPool));
         producers.onFinish(() -> {
             long elapsedTime = System.currentTimeMillis() - startTime;
             System.out.println("Producers finished in " + elapsedTime + "ms");
