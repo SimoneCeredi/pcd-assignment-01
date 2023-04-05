@@ -29,7 +29,7 @@ public class Producer implements Runnable {
                         if (file.getName().endsWith(".java")) {
                             try {
                                 queue.put(file);
-                                System.out.println("Produced: " + file.getName());
+//                                System.out.println("Produced: " + file.getName());
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }

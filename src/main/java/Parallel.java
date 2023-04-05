@@ -18,10 +18,11 @@ public class Parallel {
 
 
     public static void main(String[] args) {
-        producer = new Thread(new Producer(queue, "./files"));
+        producer = new Thread(new Producer(queue, "./files"), "Producer");
         for (int i = 0; i < 16; i++) {
-            consumers.add(new Thread(new Consumer(queue, producerFinished)));
+            consumers.add(new Thread(new Consumer(queue, producerFinished), "Consumer" + i));
         }
+        long startTime = System.currentTimeMillis();
         producer.start();
         for (Thread consumer : consumers) {
             consumer.start();
@@ -29,6 +30,8 @@ public class Parallel {
         try {
             producer.join();
             producerFinished.set(true);
+            long elapsedTime = System.currentTimeMillis() - startTime;
+            System.out.println("Finished in " + elapsedTime + " ms");
             for (Thread consumer : consumers) {
                 consumer.join();
             }

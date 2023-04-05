@@ -21,13 +21,13 @@ public class Consumer implements Runnable {
     }
 
     private void consume() {
-        while (!this.queue.isEmpty() || !this.producerFinished.get()) {
+        while (!(this.queue.isEmpty() && this.producerFinished.get())) {
             File file;
             int fileLength;
             try {
                 file = queue.take();
                 fileLength = Files.countLines(file);
-                System.out.println("\tConsumed: " + file.getAbsolutePath() + " -> " + fileLength);
+//                System.out.println("\tConsumed: " + file.getAbsolutePath() + " -> " + fileLength);
                 // TODO: save file length
             } catch (InterruptedException e) {
                 e.printStackTrace();
