@@ -35,13 +35,18 @@ public class ThreadPoolImpl implements ThreadPool {
     }
 
     @Override
-    public void onFinish(Runnable callback) throws InterruptedException {
+    public void onFinish(Runnable callback) {
         while (true) {
             if (taskQueue.isEmpty() && latch.getCount() == 0) {
                 callback.run();
                 return;
             } else {
-                latch.await();
+                try {
+                    latch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

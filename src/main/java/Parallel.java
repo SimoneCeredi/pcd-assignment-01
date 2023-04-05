@@ -8,7 +8,7 @@ import java.io.File;
 
 public class Parallel {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         String d = args[0]; // D directory presente sul file system
         int ni = Integer.parseInt(args[1]); // NI numero di intervalli
         int maxl = Integer.parseInt(args[2]); // MAXL numero numero massimo di linee di codice per delimitare l'estremo sinistro dell'ultimo intervallo
@@ -21,14 +21,19 @@ public class Parallel {
 //        Thread.sleep(100);
 //        System.exit(0);
         producers.onFinish(() -> {
-            long elapsedTime = System.currentTimeMillis() - startTime;
-            System.out.println("Producers finished in " + elapsedTime + "ms");
+            long producersTime = System.currentTimeMillis() - startTime;
+            System.out.println("Producers finished in " + producersTime + "ms");
             producers.stop();
-        });
-        consumers.onFinish(() -> {
-            long elapsedTime = System.currentTimeMillis() - startTime;
-            System.out.println("Producers finished in " + elapsedTime + "ms");
-            consumers.stop();
+            consumers.onFinish(() -> {
+                long consumersTime = System.currentTimeMillis() - startTime;
+                System.out.println("Producers finished in " + consumersTime + "ms");
+                consumers.stop();
+                dataManagersPool.onFinish(() -> {
+                    long dataManagersTime = System.currentTimeMillis() - startTime;
+                    System.out.println("Producers finished in " + dataManagersTime + "ms");
+                    dataManagersPool.stop();
+                });
+            });
         });
     }
 }
