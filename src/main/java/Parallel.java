@@ -1,42 +1,23 @@
-import model.Consumer;
-import model.Producer;
+import model.pool.ThreadPool;
+import model.pool.ThreadPoolImpl;
+import model.task.exploredir.ExploreDirTaskImpl;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Parallel {
 
-    private static final int QUEUE_CAPACITY = 50;
-    private static final List<Thread> consumers = new ArrayList<>();
-    private static Thread producer;
-    private static final BlockingQueue<File> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
-    private static final AtomicBoolean producerFinished = new AtomicBoolean();
-
-
-    public static void main(String[] args) {
-        producer = new Thread(new Producer(queue, "./files"), "Producer");
-        for (int i = 0; i < 16; i++) {
-            consumers.add(new Thread(new Consumer(queue, producerFinished), "Consumer" + i));
-        }
+    public static void main(String[] args) throws InterruptedException {
+        ThreadPool producers = new ThreadPoolImpl(3, "producer");
+        ThreadPool consumers = new ThreadPoolImpl(13, "consumer");
         long startTime = System.currentTimeMillis();
-        producer.start();
-        for (Thread consumer : consumers) {
-            consumer.start();
-        }
-        try {
-            producer.join();
-            producerFinished.set(true);
+        producers.submitTask(new ExploreDirTaskImpl(new File("./files"), producers, consumers));
+        producers.onFinish(() -> {
             long elapsedTime = System.currentTimeMillis() - startTime;
-            System.out.println("Finished in " + elapsedTime + " ms");
-            for (Thread consumer : consumers) {
-                consumer.join();
-            }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+            System.out.println("Producers finished in " + elapsedTime + "ms");
+        });
+        consumers.onFinish(() -> {
+            long elapsedTime = System.currentTimeMillis() - startTime;
+            System.out.println("Producers finished in " + elapsedTime + "ms");
+        });
     }
 }
