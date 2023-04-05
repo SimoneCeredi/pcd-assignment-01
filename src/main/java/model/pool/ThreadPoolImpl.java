@@ -10,12 +10,13 @@ public class ThreadPoolImpl implements ThreadPool {
     private final List<Thread> threadList = new LinkedList<>();
     private final BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>();
     private final CountDownLatch latch;
+    private boolean shouldStop = false;
 
     public ThreadPoolImpl(int numThreads, String name) {
         this.latch = new CountDownLatch(numThreads);
         for (int i = 0; i < numThreads; i++) {
             this.threadList.add(new Thread(() -> {
-                while (true) {
+                while (!shouldStop) {
                     try {
                         taskQueue.take().run();
                         this.latch.countDown();
@@ -42,6 +43,14 @@ public class ThreadPoolImpl implements ThreadPool {
             } else {
                 latch.await();
             }
+        }
+    }
+
+    @Override
+    public void stop() {
+        this.shouldStop = true;
+        for (Thread t : this.threadList) {
+            t.interrupt();
         }
     }
 
