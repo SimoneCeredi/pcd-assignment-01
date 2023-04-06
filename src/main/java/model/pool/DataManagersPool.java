@@ -1,7 +1,7 @@
 package model.pool;
 
-import model.Counter;
-import model.FileInfo;
+import model.data.FileInfo;
+import model.data.monitor.Counter;
 
 import java.util.HashMap;
 import java.util.concurrent.PriorityBlockingQueue;

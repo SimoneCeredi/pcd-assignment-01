@@ -1,4 +1,4 @@
-package model;
+package model.data.monitor;
 
 public interface Counter {
     void inc();

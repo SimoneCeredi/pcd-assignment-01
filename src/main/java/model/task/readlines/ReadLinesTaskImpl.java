@@ -1,6 +1,6 @@
 package model.task.readlines;
 
-import model.FileInfo;
+import model.data.FileInfo;
 import model.pool.DataManagersPool;
 import utils.Files;
 

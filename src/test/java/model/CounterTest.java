@@ -1,5 +1,7 @@
 package model;
 
+import model.data.monitor.Counter;
+import model.data.monitor.CounterImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package model;
+package model.data.monitor;
 
 public class CounterImpl implements Counter {
     int value;

@@ -1,8 +1,8 @@
 package model.pool;
 
-import model.Counter;
-import model.CounterImpl;
-import model.FileInfo;
+import model.data.FileInfo;
+import model.data.monitor.Counter;
+import model.data.monitor.CounterImpl;
 import model.task.datamanager.DataManagerTaskImpl;
 
 import java.util.Comparator;

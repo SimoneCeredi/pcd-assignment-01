@@ -1,7 +1,7 @@
 package model.task.datamanager;
 
-import model.Counter;
-import model.FileInfo;
+import model.data.FileInfo;
+import model.data.monitor.Counter;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -27,7 +27,6 @@ public class DataManagerTaskImpl implements DataManagerTask {
             if (topN.size() > n) {
                 topN.poll();
             }
-
         }
         for (var entry : this.lineCount.entrySet()) {
             if (this.fileInfo.getLineCount() < entry.getKey()) {
