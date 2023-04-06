@@ -54,7 +54,6 @@ public class ModelImpl implements Model {
         this.fileSystemExplorers.onFinish(() -> this.lineCounters.onFinish(() -> this.dataManagersPool.onFinish(callback)));
     }
 
-
     @Override
     public void changeDir(File newDir) {
         this.directory = newDir;

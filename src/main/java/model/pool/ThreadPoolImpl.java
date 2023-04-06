@@ -10,7 +10,7 @@ public class ThreadPoolImpl implements ThreadPool {
     private final List<Thread> threadList = new LinkedList<>();
     private final BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>();
     private final CountDownLatch latch;
-    private boolean shouldStop = false;
+    private volatile boolean shouldStop = false;
 
     public ThreadPoolImpl(int numThreads, String name) {
         this.latch = new CountDownLatch(numThreads);

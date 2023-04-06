@@ -6,7 +6,7 @@ import view.View;
 public class ControllerImpl implements Controller {
     private final Model model;
     private final View view;
-    private boolean shouldStop = false;
+    private volatile boolean shouldStop = false;
     private long startTime;
 
     public ControllerImpl(Model model, View view) {
@@ -30,8 +30,8 @@ public class ControllerImpl implements Controller {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("Exploration completed in " + (System.currentTimeMillis() - startTime) + "ms");
             }
+            System.out.println("Exploration completed in " + (System.currentTimeMillis() - startTime) + "ms");
         }).start();
         this.model.onFinish(this::stop);
     }
