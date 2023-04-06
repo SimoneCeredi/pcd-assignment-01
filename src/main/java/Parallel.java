@@ -12,7 +12,15 @@ import java.util.stream.Collectors;
 public class Parallel {
 
     public static void main(String[] args) {
-        String d = args[0]; // D directory presente sul file system
+        if (args.length != 4) {
+            System.err.println("Wrong args given, should be D NI MAXL N, args given were " + args.length);
+            System.exit(1);
+        }
+        File d = new File(args[0]); // D directory presente sul file system
+        if (!d.exists()) {
+            System.err.println("File or directory " + d.getAbsolutePath() + " does not exist!");
+            System.exit(1);
+        }
         int ni = Integer.parseInt(args[1]); // NI numero di intervalli
         int maxl = Integer.parseInt(args[2]); // MAXL numero numero massimo di linee di codice per delimitare l'estremo sinistro dell'ultimo intervallo
         int n = Integer.parseInt(args[3]); // N sorgenti con il numero maggiore di linee di codice
@@ -20,9 +28,7 @@ public class Parallel {
         ThreadPool consumers = new ThreadPoolImpl(13, "consumer");
         DataManagersPool dataManagersPool = new DataManagersPoolImpl(3, "data-man", ni, maxl, n);
         long startTime = System.currentTimeMillis();
-        producers.submitTask(new ExploreDirTaskImpl(new File(d), producers, consumers, dataManagersPool));
-//        Thread.sleep(100);
-//        System.exit(0);
+        producers.submitTask(new ExploreDirTaskImpl(d, producers, consumers, dataManagersPool));
         producers.onFinish(() -> {
             long producersTime = System.currentTimeMillis() - startTime;
             System.out.println("Producers finished in " + producersTime + "ms");
