@@ -14,7 +14,8 @@ public class LongestFilesQueueImpl implements LongestFilesQueue {
 
     @Override
     public synchronized void put(FileInfo fileInfo) {
-        if (this.queue.size() < this.filesToKeep || fileInfo.getLineCount() > Objects.requireNonNull(this.queue.peek()).getLineCount()) {
+        if (this.queue.size() < this.filesToKeep ||
+                fileInfo.getLineCount() > Objects.requireNonNull(this.queue.peek()).getLineCount()) {
             this.queue.offer(fileInfo);
             if (this.queue.size() > this.filesToKeep) {
                 this.queue.poll();
