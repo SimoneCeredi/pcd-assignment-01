@@ -2,10 +2,7 @@ package model.data.monitor;
 
 import model.data.FileInfo;
 
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class LongestFilesQueueImpl implements LongestFilesQueue {
     private final int filesToKeep;
@@ -23,5 +20,10 @@ public class LongestFilesQueueImpl implements LongestFilesQueue {
                 this.queue.poll();
             }
         }
+    }
+
+    @Override
+    public Collection<FileInfo> get() {
+        return Collections.unmodifiableCollection(new PriorityQueue<>(this.queue));
     }
 }

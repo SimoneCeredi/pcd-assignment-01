@@ -1,14 +1,16 @@
 package model.pool;
 
 import model.data.FileInfo;
-import model.data.LineCounter;
-import model.data.monitor.LongestFilesQueue;
+import model.data.monitor.UnmodifiableCounter;
+
+import java.util.Collection;
+import java.util.Map;
 
 public interface DataManagersPool extends ThreadPool {
 
     void submitFileInfo(FileInfo fileInfo);
 
-    LineCounter getLineCount();
+    Map<Integer, UnmodifiableCounter> getLineCounter();
 
-    LongestFilesQueue getTopN();
+    Collection<FileInfo> getLongestFiles();
 }

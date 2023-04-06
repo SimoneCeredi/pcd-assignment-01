@@ -1,7 +1,5 @@
 package model.data.monitor;
 
-public interface Counter {
+public interface Counter extends UnmodifiableCounter {
     void inc();
-
-    int getValue();
 }

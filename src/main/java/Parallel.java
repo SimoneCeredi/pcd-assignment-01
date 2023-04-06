@@ -1,3 +1,4 @@
+import model.data.FileInfo;
 import model.pool.DataManagersPool;
 import model.pool.DataManagersPoolImpl;
 import model.pool.ThreadPool;
@@ -5,6 +6,8 @@ import model.pool.ThreadPoolImpl;
 import model.task.exploredir.ExploreDirTaskImpl;
 
 import java.io.File;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 public class Parallel {
 
@@ -32,6 +35,10 @@ public class Parallel {
                     long dataManagersTime = System.currentTimeMillis() - startTime;
                     System.out.println("Producers finished in " + dataManagersTime + "ms");
                     dataManagersPool.stop();
+                    System.out.println("LineCounter");
+                    dataManagersPool.getLineCounter().forEach((l, c) -> System.out.println("of " + l + " lines -> " + c.getValue()));
+                    System.out.println("LongestFiles");
+                    System.out.println(dataManagersPool.getLongestFiles().stream().sorted(Comparator.comparingInt(FileInfo::getLineCount)).map(f -> f.getFile().getName() + " -> " + f.getLineCount()).collect(Collectors.joining("\n")));
                 });
             });
         });

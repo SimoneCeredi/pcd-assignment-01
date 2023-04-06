@@ -5,7 +5,11 @@ import model.data.LineCounter;
 import model.data.LineCounterImpl;
 import model.data.monitor.LongestFilesQueue;
 import model.data.monitor.LongestFilesQueueImpl;
+import model.data.monitor.UnmodifiableCounter;
 import model.task.datamanager.DataManagerTaskImpl;
+
+import java.util.Collection;
+import java.util.Map;
 
 public class DataManagersPoolImpl extends ThreadPoolImpl implements DataManagersPool {
 
@@ -24,12 +28,12 @@ public class DataManagersPoolImpl extends ThreadPoolImpl implements DataManagers
     }
 
     @Override
-    public LineCounter getLineCount() {
-        return this.lineCounter;
+    public Map<Integer, UnmodifiableCounter> getLineCounter() {
+        return this.lineCounter.get();
     }
 
     @Override
-    public LongestFilesQueue getTopN() {
-        return this.longestFiles;
+    public Collection<FileInfo> getLongestFiles() {
+        return this.longestFiles.get();
     }
 }
