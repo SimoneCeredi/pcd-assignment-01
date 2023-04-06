@@ -7,6 +7,7 @@ import model.pool.DataManagersPoolImpl;
 import model.pool.ThreadPool;
 import model.pool.ThreadPoolImpl;
 import model.task.exploredir.ExploreDirTaskImpl;
+import utils.Pair;
 
 import java.io.File;
 import java.util.Collection;
@@ -27,7 +28,7 @@ public class ModelImpl implements Model {
     }
 
     @Override
-    public Map<Integer, UnmodifiableCounter> getLineCounter() {
+    public Map<Pair<Integer, Integer>, UnmodifiableCounter> getLineCounter() {
         return this.dataManagersPool.getLineCounter();
     }
 

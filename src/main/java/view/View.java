@@ -2,10 +2,11 @@ package view;
 
 import model.data.FileInfo;
 import model.data.monitor.UnmodifiableCounter;
+import utils.Pair;
 
 import java.util.Collection;
 import java.util.Map;
 
 public interface View {
-    void update(Map<Integer, UnmodifiableCounter> lineCounter, Collection<FileInfo> longestFiles);
+    void update(Map<Pair<Integer, Integer>, UnmodifiableCounter> lineCounter, Collection<FileInfo> longestFiles);
 }

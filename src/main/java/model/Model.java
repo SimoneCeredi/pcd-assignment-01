@@ -2,13 +2,14 @@ package model;
 
 import model.data.FileInfo;
 import model.data.monitor.UnmodifiableCounter;
+import utils.Pair;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.Map;
 
 public interface Model {
-    Map<Integer, UnmodifiableCounter> getLineCounter();
+    Map<Pair<Integer, Integer>, UnmodifiableCounter> getLineCounter();
 
     Collection<FileInfo> getLongestFiles();
 

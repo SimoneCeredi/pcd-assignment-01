@@ -7,6 +7,7 @@ import model.data.monitor.LongestFilesQueue;
 import model.data.monitor.LongestFilesQueueImpl;
 import model.data.monitor.UnmodifiableCounter;
 import model.task.datamanager.DataManagerTaskImpl;
+import utils.Pair;
 
 import java.util.Collection;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class DataManagersPoolImpl extends ThreadPoolImpl implements DataManagers
     }
 
     @Override
-    public Map<Integer, UnmodifiableCounter> getLineCounter() {
+    public Map<Pair<Integer, Integer>, UnmodifiableCounter> getLineCounter() {
         return this.lineCounter.get();
     }
 

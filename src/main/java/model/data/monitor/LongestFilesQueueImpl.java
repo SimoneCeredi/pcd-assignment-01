@@ -25,6 +25,6 @@ public class LongestFilesQueueImpl implements LongestFilesQueue {
 
     @Override
     public Collection<FileInfo> get() {
-        return Collections.unmodifiableCollection(new PriorityQueue<>(this.queue));
+        return Collections.unmodifiableCollection(this.queue);
     }
 }

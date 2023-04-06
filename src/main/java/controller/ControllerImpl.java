@@ -30,9 +30,9 @@ public class ControllerImpl implements Controller {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                System.out.println("Exploration completed in " + (System.currentTimeMillis() - startTime) + "ms");
             }
         }).start();
-        this.model.start();
         this.model.onFinish(this::stop);
     }
 
@@ -40,6 +40,5 @@ public class ControllerImpl implements Controller {
     public void stop() {
         this.shouldStop = true;
         this.model.stop();
-        System.out.println("Program terminated in " + (System.currentTimeMillis() - startTime));
     }
 }
