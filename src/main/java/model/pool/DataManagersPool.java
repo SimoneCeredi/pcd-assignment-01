@@ -1,16 +1,14 @@
 package model.pool;
 
 import model.data.FileInfo;
-import model.data.monitor.Counter;
-
-import java.util.HashMap;
-import java.util.concurrent.PriorityBlockingQueue;
+import model.data.LineCounter;
+import model.data.monitor.LongestFilesQueue;
 
 public interface DataManagersPool extends ThreadPool {
 
     void submitFileInfo(FileInfo fileInfo);
 
-    HashMap<Integer, Counter> getLineCount();
+    LineCounter getLineCount();
 
-    PriorityBlockingQueue<FileInfo> getTopN();
+    LongestFilesQueue getTopN();
 }
