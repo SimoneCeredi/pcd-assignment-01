@@ -35,6 +35,11 @@ public class ThreadPoolImpl implements ThreadPool {
     }
 
     @Override
+    public void clearTasks() {
+        this.taskQueue.clear();
+    }
+
+    @Override
     public void onFinish(Runnable callback) {
         while (true) {
             if (taskQueue.isEmpty() && latch.getCount() == 0) {
