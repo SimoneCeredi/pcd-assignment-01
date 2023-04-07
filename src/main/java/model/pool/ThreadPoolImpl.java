@@ -7,6 +7,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ThreadPoolImpl implements ThreadPool {
+    private static final boolean SLOW_MODE = false;
     private final List<Thread> threadList = new LinkedList<>();
     private final BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>();
     private final CountDownLatch latch;
@@ -20,6 +21,9 @@ public class ThreadPoolImpl implements ThreadPool {
                     try {
                         taskQueue.take().run();
                         this.latch.countDown();
+                        if (SLOW_MODE) {
+                            Thread.sleep(1);
+                        }
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }

@@ -26,13 +26,11 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void stop() {
-        new Thread(this.model::stop);
+        new Thread(this.model::stop).start();
     }
 
     @Override
     public void changeParams(File d, int ni, int maxl, int n) {
-        new Thread(() -> {
-            this.model.changeParams(d, ni, maxl, n);
-        }).start();
+        new Thread(() -> this.model.changeParams(d, ni, maxl, n)).start();
     }
 }

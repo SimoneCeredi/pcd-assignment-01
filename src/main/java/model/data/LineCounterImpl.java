@@ -41,6 +41,6 @@ public class LineCounterImpl implements LineCounter {
 
     @Override
     public Map<Pair<Integer, Integer>, UnmodifiableCounter> get() {
-        return Collections.unmodifiableMap(this.map);
+        return Collections.unmodifiableMap(new HashMap<>(this.map));
     }
 }

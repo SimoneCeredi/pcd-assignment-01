@@ -3,8 +3,6 @@ package view;
 import controller.Controller;
 import model.Model;
 import model.data.FileInfo;
-import model.data.monitor.Counter;
-import model.data.monitor.CounterImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +12,6 @@ import java.io.File;
 import java.util.Comparator;
 
 public class GuiViewImpl extends JFrame implements View {
-    private static final int UPDATES_BEFORE_PRINT = 1000;
-    private final Counter updates = new CounterImpl();
-
     private final Controller controller;
     private File d;
     private int ni;
@@ -168,27 +163,24 @@ public class GuiViewImpl extends JFrame implements View {
     @Override
     public void modelUpdated(Model model) {
         SwingUtilities.invokeLater(() -> {
-            this.updates.inc();
-            if (this.updates.getValue() % UPDATES_BEFORE_PRINT == 0) {
-                this.longestFiles.setListData(
-                        model.getLongestFiles().stream()
-                                .sorted(Comparator.comparingInt(FileInfo::getLineCount))
-                                .map(f -> f.getFile().getAbsolutePath() + " -> " + f.getLineCount())
-                                .toArray(String[]::new)
-                );
-                this.linesCounters.setListData(
-                        model.getLineCounter().entrySet().stream()
-                                .sorted(Comparator.comparingInt(e -> e.getKey().getX()))
-                                .map(e ->
-                                        e.getValue().getValue() +
-                                                " files in range [" +
-                                                e.getKey().getX() +
-                                                (e.getKey().getY() == Integer.MAX_VALUE ? "+" : ("," + e.getKey().getY())) +
-                                                "]"
-                                )
-                                .toArray(String[]::new)
-                );
-            }
+            this.longestFiles.setListData(
+                    model.getLongestFiles().stream()
+                            .sorted(Comparator.comparingInt(FileInfo::getLineCount))
+                            .map(f -> f.getFile().getName() + " -> " + f.getLineCount())
+                            .toArray(String[]::new)
+            );
+            this.linesCounters.setListData(
+                    model.getLineCounter().entrySet().stream()
+                            .sorted(Comparator.comparingInt(e -> e.getKey().getX()))
+                            .map(e ->
+                                    e.getValue().getValue() +
+                                            " files in range [" +
+                                            e.getKey().getX() +
+                                            (e.getKey().getY() == Integer.MAX_VALUE ? "+" : ("," + e.getKey().getY())) +
+                                            "]"
+                            )
+                            .toArray(String[]::new)
+            );
         });
     }
 }
