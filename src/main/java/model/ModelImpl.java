@@ -7,23 +7,30 @@ import model.pool.DataManagersPoolImpl;
 import model.pool.ThreadPool;
 import model.pool.ThreadPoolImpl;
 import model.task.exploredir.ExploreDirTaskImpl;
+import observers.ModelObserver;
 import utils.Pair;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
-public class ModelImpl implements Model {
-    public static final int NUM_EXPLORERS_THREADS = 3;
+public class ModelImpl implements UpdatableModel, Model {
+    private static final int NUM_EXPLORERS_THREADS = 2;
+    private static final int NUM_COUNTERS_THREADS = 12;
+    private static final int NUM_DM_THREADS = 2;
+    private final List<ModelObserver> observers;
     private final ThreadPool fileSystemExplorers;
     private final ThreadPool lineCounters;
     private final DataManagersPool dataManagersPool;
     private File directory;
 
     public ModelImpl(File d, int ni, int maxl, int n) {
+        this.observers = new LinkedList<>();
         this.fileSystemExplorers = new ThreadPoolImpl(NUM_EXPLORERS_THREADS, "fs-expl");
-        this.lineCounters = new ThreadPoolImpl(18, "l-count");
-        this.dataManagersPool = new DataManagersPoolImpl(3, "data-man", ni, maxl, n);
+        this.lineCounters = new ThreadPoolImpl(NUM_COUNTERS_THREADS, "l-count");
+        this.dataManagersPool = new DataManagersPoolImpl(this, NUM_DM_THREADS, "data-man", ni, maxl, n);
         this.directory = d;
     }
 
@@ -55,7 +62,23 @@ public class ModelImpl implements Model {
     }
 
     @Override
+    public void update() {
+        this.notifyObservers();
+    }
+
+    @Override
+    public void addObserver(ModelObserver observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
     public void changeDir(File newDir) {
         this.directory = newDir;
+    }
+
+    private void notifyObservers() {
+        for (var observer : this.observers) {
+            observer.modelUpdated(this);
+        }
     }
 }

@@ -1,12 +1,7 @@
 package view;
 
-import model.data.FileInfo;
-import model.data.monitor.UnmodifiableCounter;
-import utils.Pair;
+import observers.ModelObserver;
 
-import java.util.Collection;
-import java.util.Map;
+public interface View extends ModelObserver {
 
-public interface View {
-    void update(Map<Pair<Integer, Integer>, UnmodifiableCounter> lineCounter, Collection<FileInfo> longestFiles);
 }

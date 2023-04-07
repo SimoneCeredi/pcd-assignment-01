@@ -24,7 +24,8 @@ public class Parallel {
         int n = Integer.parseInt(args[3]); // N sorgenti con il numero maggiore di linee di codice
         View view = new ConsoleViewImpl();
         Model model = new ModelImpl(d, ni, maxl, n);
-        Controller controller = new ControllerImpl(model, view);
+        Controller controller = new ControllerImpl(model);
+        model.addObserver(view);
         controller.start();
     }
 }

@@ -2,6 +2,7 @@ package model;
 
 import model.data.FileInfo;
 import model.data.monitor.UnmodifiableCounter;
+import observers.ModelObserver;
 import utils.Pair;
 
 import java.io.File;
@@ -18,6 +19,8 @@ public interface Model {
     void stop();
 
     void onFinish(Runnable callback);
+    
+    void addObserver(ModelObserver observer);
 
     void changeDir(File newDir);
 }

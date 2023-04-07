@@ -1,5 +1,6 @@
 package model.pool;
 
+import model.UpdatableModel;
 import model.data.FileInfo;
 import model.data.LineCounter;
 import model.data.LineCounterImpl;
@@ -16,16 +17,18 @@ public class DataManagersPoolImpl extends ThreadPoolImpl implements DataManagers
 
     private final LineCounter lineCounter;
     private final LongestFilesQueue longestFiles;
+    private final UpdatableModel model;
 
-    public DataManagersPoolImpl(int numThreads, String name, int ni, int maxl, int n) {
+    public DataManagersPoolImpl(UpdatableModel model, int numThreads, String name, int ni, int maxl, int n) {
         super(numThreads, name);
         this.longestFiles = new LongestFilesQueueImpl(n);
         this.lineCounter = new LineCounterImpl(ni, maxl);
+        this.model = model;
     }
 
     @Override
     public void submitFileInfo(FileInfo fileInfo) {
-        super.submitTask(new DataManagerTaskImpl(this.lineCounter, this.longestFiles, fileInfo));
+        super.submitTask(new DataManagerTaskImpl(this.model, this.lineCounter, this.longestFiles, fileInfo));
     }
 
     @Override
