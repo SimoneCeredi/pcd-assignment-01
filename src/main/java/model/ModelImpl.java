@@ -23,7 +23,7 @@ public class ModelImpl implements UpdatableModel, Model {
     private final List<ModelObserver> observers;
     private final ThreadPool fileSystemExplorers;
     private final ThreadPool lineCounters;
-    private final DataManagersPool dataManagersPool;
+    private DataManagersPool dataManagersPool;
     private File directory;
 
     public ModelImpl(File d, int ni, int maxl, int n) {
@@ -72,8 +72,17 @@ public class ModelImpl implements UpdatableModel, Model {
     }
 
     @Override
-    public void changeDir(File newDir) {
-        this.directory = newDir;
+    public void changeParams(File d, int ni, int maxl, int n) {
+        this.stop();
+        this.onFinish(() -> {
+            this.fileSystemExplorers.clearTasks();
+            this.lineCounters.clearTasks();
+            this.dataManagersPool.clearTasks();
+            this.directory = d;
+            this.dataManagersPool = new DataManagersPoolImpl(this, NUM_DM_THREADS, "data-man", ni, maxl, n);
+            this.start();
+        });
+
     }
 
     private void notifyObservers() {

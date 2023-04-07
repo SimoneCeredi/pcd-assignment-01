@@ -9,13 +9,13 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class ConsoleViewImpl implements View {
-    private static final int updatesBeforePrint = 1000;
+    private static final int UPDATES_BEFORE_PRINT = 1000;
     private final Counter updates = new CounterImpl();
 
     @Override
     public void modelUpdated(Model model) {
         this.updates.inc();
-        if (this.updates.getValue() % updatesBeforePrint == 0) {
+        if (this.updates.getValue() % UPDATES_BEFORE_PRINT == 0) {
             synchronized (System.out) {
                 System.out.println("\n\n\n\nLongest Files");
                 System.out.println(model.getLongestFiles().stream()

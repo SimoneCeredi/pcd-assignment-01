@@ -19,8 +19,8 @@ public interface Model {
     void stop();
 
     void onFinish(Runnable callback);
-    
+
     void addObserver(ModelObserver observer);
 
-    void changeDir(File newDir);
+    void changeParams(File d, int ni, int maxl, int n);
 }
