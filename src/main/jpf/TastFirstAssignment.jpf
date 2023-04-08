@@ -1,0 +1,10 @@
+target = jpf.FirstAssignment
+
+classpath=build/classes/java/main
+
+listener=gov.nasa.jpf.listener.PreciseRaceDetector
+
+report.console.property_violation=error,trace
+
+search.depth_limit=20
+search.time_limit=1m
