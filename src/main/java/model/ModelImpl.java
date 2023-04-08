@@ -91,7 +91,7 @@ public class ModelImpl implements UpdatableModel, Model {
     }
 
     private void notifyObservers() {
-        for (var observer : this.observers) {
+        for (ModelObserver observer : this.observers) {
             observer.modelUpdated(this);
         }
     }

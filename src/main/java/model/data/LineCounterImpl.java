@@ -30,7 +30,7 @@ public class LineCounterImpl implements LineCounter {
 
     @Override
     public void store(FileInfo fileInfo) {
-        for (var entry : this.map.entrySet()) {
+        for (Map.Entry<Pair<Integer, Integer>, Counter> entry : this.map.entrySet()) {
             if (fileInfo.getLineCount() >= entry.getKey().getX() && fileInfo.getLineCount() <= entry.getKey().getY()) {
                 entry.getValue().inc();
                 break;
