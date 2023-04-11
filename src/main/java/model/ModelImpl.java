@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ModelImpl implements UpdatableModel, Model {
-    private static final int NUM_EXPLORERS_THREADS = 2;
-    private static final int NUM_COUNTERS_THREADS = 4;
+    private static final int NUM_EXPLORERS_THREADS = 8;
+    private static final int NUM_COUNTERS_THREADS = 14;
     private static final int NUM_DM_THREADS = 2;
     private final List<ModelObserver> observers;
     private ThreadPool fileSystemExplorers;

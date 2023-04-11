@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Serial {
 
-    public static final String D = "./src/main/java/controller";
+    public static final String D = "./files";
 
     public static void main(String[] args) {
         List<File> files = Files.getFiles(D);
